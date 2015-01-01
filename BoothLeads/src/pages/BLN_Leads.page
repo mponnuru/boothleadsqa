@@ -1,0 +1,83 @@
+<apex:page controller="scanlead" sidebar="false" standardStylesheets="false" >
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockSection >
+<apex:pageBlockTable value="{!ls}" var="l">
+<apex:column headervalue="Lead Scan Number">
+<apex:outputText value="{!l.name}"/>
+</apex:column>
+
+<apex:column headerValue="ScanTime">
+<apex:outputText value="{!l.Scan_Time__c}"/>
+</apex:column>
+
+<apex:column headerValue="Event">
+<apex:outputText value="{!l.Event__c}"/>
+</apex:column>
+
+<!--<apex:column headerValue="ScannerCompany">
+<apex:outputText value="{!l.Scanner_Company__c}"/>
+</apex:column>-->
+
+<apex:column headerValue="prefix">
+<apex:outputText value="{!l.Prefix__c}"/>
+</apex:column>
+
+
+
+<apex:column headervalue="FirstName">
+<apex:outputText value="{!l.First_Name__c}"/>
+</apex:column>
+
+<apex:column headerValue="LastName">
+<apex:outputText value="{!l.Last_Name__c}"/>
+</apex:column>
+
+
+<apex:column headerValue="Suffix">
+<apex:outputText value="{!l.Suffix__c}"/>
+</apex:column>
+
+<apex:column headerValue="Company">
+<apex:outputText value="{!l.Company__c}"/>
+</apex:column>
+
+
+<apex:column headerValue="Street1">
+<apex:outputText value="{!l.Street1__c}"/>
+</apex:column>
+<apex:column headerValue="Street2">
+<apex:outputText value="{!l.Street2__c}"/>
+</apex:column>
+
+
+<apex:column headerValue="City">
+<apex:outputText value="{!l.City__c}"/>
+</apex:column>
+
+<apex:column headerValue="CellPhone">
+<apex:outputText value="{!l.Cell_Phone__c}"/>
+</apex:column>
+
+<apex:column headerValue="WorkPhone">
+<apex:outputText value="{!l.Work_Phone__c}"/>
+</apex:column>
+
+<apex:column headerValue="HomePhone">
+<apex:outputText value="{!l.Home_Phone__c}"/>
+</apex:column>
+
+<apex:column headerValue="ScaneeUser">
+<apex:outputText value="{!l.Scanee_User__r.name}"/>
+</apex:column>
+
+<apex:column headerValue="User FirstName">
+<apex:outputText value="{!l.Scanee_User__r.First_Name__c}"/>
+</apex:column>
+<apex:column headerValue="UserLastName">
+<apex:outputText value="{!l.Scanee_User__r.Last_Name__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlockSection></apex:pageBlock>
+ </apex:form>
+</apex:page>

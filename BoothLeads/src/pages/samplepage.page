@@ -1,0 +1,6 @@
+<apex:page controller="samplepagecon" id="thepage" standardStylesheets="true" showHeader="false">
+  <apex:form >
+    <apex:inputField value="{!ins.acc.Name}"/>
+   <apex:commandButton value="Save" action="{!ins.save}"/>
+  </apex:form>
+</apex:page>

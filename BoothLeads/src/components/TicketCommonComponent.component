@@ -1,0 +1,356 @@
+<apex:component controller="BLN_EventsEditCon">
+/***********************************************************************************************
+*   Controller Name : BLN_EventsConTest
+*   Date            : 22/12/2014
+*   Author          : Arindam Sarkar
+*   Purpose         : This component is common for Ticket Section in create event,edit event and manage tickets
+*   Change History  : 22/12/2014 
+*       Date                 Programmer                     Reason
+*   --------------      -------------------           -------------------------
+*   22/12/2014          Arindam Sarkar                  validation and badge labels
+**************************************************************************************************/
+
+
+<!-----------------------start of ticket row validation---------------------------------------------------------------------->
+<script>
+<!--Ticket Validation at main row level-->
+function ticketvalid(){
+
+
+var tickss= document.getElementsByClassName("tickfield");
+var ticklen=tickss.length;
+var s='';
+for (var i=0; i<ticklen; i++){
+if (tickss[i].value==""){
+
+tickss[i].style.border="2px solid #d43535"
+s='error';
+}
+else if(tickss[i].value!==""){
+
+tickss[i].style.border="1px solid #e3e3e3"
+
+}
+
+}
+var qflag=0;
+ var table = document.getElementById("tickettable");
+             for (var i = 1, row,arrindex=0; row = table.rows[i]; i++) {
+             if(row.cells[2].children[0].value==0){
+             row.cells[2].children[0].style.border="2px solid #d43535";
+             s='error';
+             qflag=1;
+              }
+                     else {
+
+               row.cells[2].children[0].style.border="1px solid #e3e3e3";
+
+                  }
+             }
+             if(qflag==1) alert('Quantity cannot be 0 or blank');
+
+if(s!='error')
+{
+/alert("success");/
+document.getElementById("ticketloader").style.display="";
+document.getElementById("ticketnext").innerHTML="Save";
+saveTicket();
+
+
+}
+
+
+}
+
+
+
+
+<!--Package validation at row level-->
+
+<!-------------------------------package section validation------------------------------------------------>
+
+<!----------------pkgname onblur valid---------------------------->
+function pkgnmblurvalid(){
+if (document.getElementById("packagename").value== ""){
+document.getElementById("packagename").style.border="2px solid #d43535";
+
+}
+if (document.getElementById("packagename").value!= "")
+{
+document.getElementById("packagename").style.border="2px solid #bac958";
+}
+}
+
+<!-----------------------pkgname onKeyup valid----------------------------------------->
+function pkgnmkeyupvalid(){
+document.getElementById("packagename").style.border="1px solid #e3e3e3";
+}
+
+<!--------------------------------------------------------------------------------->
+
+<!----------------pkgprice onblur valid---------------------------->
+function pkgpriceblurvalid(){
+if (document.getElementById("packageprice").value== ""){
+document.getElementById("packageprice").style.border="2px solid #d43535";
+
+}
+if (document.getElementById("packageprice").value!= "")
+{
+document.getElementById("packageprice").style.border="2px solid #bac958";
+}
+}
+
+<!-----------------------pkgprice onKeyup valid----------------------------------------->
+function pkgpricekeyupvalid(){
+document.getElementById("packageprice").style.border="1px solid #e3e3e3";
+}
+
+<!--------------------------------------------------------------------------------->
+
+<!----------------pkgqty onblur valid---------------------------->
+function pkgqtyblurvalid(){
+if (document.getElementById("packageqty").value== ""){
+document.getElementById("packageqty").style.border="2px solid #d43535";
+
+}
+if (document.getElementById("packageqty").value!= "")
+{
+document.getElementById("packageqty").style.border="2px solid #bac958";
+}
+}
+
+<!-----------------------pkgqty onKeyup valid----------------------------------------->
+function pkgqtykeyupvalid(){
+document.getElementById("packageqty").style.border="1px solid #e3e3e3";
+}
+
+<!--------------------------------------------------------------------------------->
+
+<!------------on click of package save valid--------------------------------------------------------------------------->
+function pkgvalid(){
+<!--------------------------------error--------------------------------->
+if (document.getElementById("packagename").value==""){
+document.getElementById("packagename").style.border="2px solid #d43535";
+}
+
+if (document.getElementById("packageprice").value==""){
+document.getElementById("packageprice").style.border="2px solid #d43535";
+}
+
+if (document.getElementById("packageqty").value==""){
+
+document.getElementById("packageqty").style.border="2px solid #d43535";
+}
+
+<!------------------success------------------------>
+
+if (document.getElementById("packagename").value!=""){
+document.getElementById("packagename").style.border="1px solid #e3e3e3";
+}
+
+if (document.getElementById("packageprice").value!=""){
+document.getElementById("packageprice").style.border="1px solid #e3e3e3";
+}
+
+if (document.getElementById("packageqty").value!=""){
+
+document.getElementById("packageqty").style.border="1px solid #e3e3e3";
+}
+
+<!-------------------------------Pkg line item validation---------------------------------------------->
+
+var pkgitm= document.getElementsByClassName("pkglineitmfield");
+var pkgitmlen=pkgitm.length;
+var s='';
+
+for (var i=0; i<pkgitmlen; i++){
+if (pkgitm[i].value==""){
+/alert("null");/
+pkgitm[i].style.border="2px solid #d43535"
+s='error';
+}
+else if(pkgitm[i].value!==""){
+
+pkgitm[i].style.border="1px solid #e3e3e3"
+
+}
+
+}
+
+if(s!='error' && document.getElementById("packagename").value != "" && document.getElementById("packageprice").value != "" && document.getElementById("packageqty").value != "" )
+{
+/alert("success");/
+if(pckcontents=='')
+{
+ savepackageinfo();
+ packagelogourl='';
+}
+else{
+savePackageLogo(pckcontents);
+document.getElementById("ticketloader").style.display="";}
+setTicketDirtyFlag();
+showclose('package1','dynamictickets');
+
+}
+
+
+<!------------------------------------------------------------------------------------------------------>
+
+}
+
+</script>
+<!------------------------------------------------------------------------------------------------------->
+<!-----------------------------------end of ticket row validation------------------------------------------------------------------------------------->
+ <script>
+ 
+   
+   
+   
+   function validfreetick()
+                        {
+                            var tmtable = document.getElementById("mytab1");
+       for (var p = 1,row; row = tmtable.rows[p]; p++) {
+        if(document.querySelector('input[name="payradio"]:checked').value=='Free'){
+       row.cells[6].children[0].value=0;
+       row.cells[6].children[0].disabled="disabled";
+       }
+       else{
+       row.cells[6].children[0].disabled=false;
+       }
+       }
+       
+                        }
+                        
+                        
+                        
+                        
+                        
+         function editticketbadgelabel(titemtype)
+                         {
+                            
+                            
+                            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.BLN_EventsEditCon.getbadgeinfo}',
+            titemtype,
+            1,
+           function(result, event){
+           
+           
+           if(result.badgable!='B - Badge')
+                            {
+                                document.getElementById('tbdglabel').value="";
+                                document.getElementById('tbdglabel').disabled="disabled";
+                             }
+                           else{
+                             document.getElementById('tbdglabel').disabled=false; 
+                             document.getElementById('tbdglabel').value=result.badgelabel;
+                         }
+             });
+             }
+             
+             function editticketbadgelabelmoreinfo(titemtype)
+                         {
+                            
+                            
+                            Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.BLN_EventsEditCon.getbadgeinfo}',
+            titemtype,
+            1,
+           function(result, event){
+           
+           
+           if(result.badgable!='B - Badge')
+                            {
+                               
+                                document.getElementById('tbdglabel').disabled="disabled";
+                             }
+                           else{
+                             document.getElementById('tbdglabel').disabled=false; 
+                             
+                         }
+             });
+             }
+                            
+
+function showet1(){
+                if(flagexppp==0)
+                        { 
+                        flagexppp=1;
+                        /*alert("block");*/
+                            document.getElementById("tagcontentblock").style.display="";
+                            
+                        }
+                        else if (flagexppp==1)
+                        {
+                            /*alert("hide");*/
+                            flagexppp=0;
+                            document.getElementById("tagcontentblock").style.display="none";
+                             
+                        
+                        }
+                        
+            }
+               function saveticketalert()
+                        {
+                           var table = document.getElementById("mytab1");
+                                 for (var i = 1, row; row = table.rows[i]; i++) {
+                                 try{
+                      var tstartTime = new Date(row.cells[1].children[0].value);
+                      var tendTime = new Date(row.cells[2].children[0].value);
+                      if( tstartTime > tendTime){
+                             alert('Start date cannot be greater than End date');
+                             return;
+                            }
+                      }catch(e){alert(e);}
+                      
+                     
+                      if(Number(row.cells[5].children[0].value)>Number(row.cells[3].children[0].value))
+                      {
+                        
+                        alert('Order Max-Qty cannot be greater than actual quanity');
+                        return;
+                       
+                        
+                      }
+                      if(Number(row.cells[4].children[0].value)>Number(row.cells[3].children[0].value))
+                      {
+                        
+                        alert('Order Min-Qty cannot be greater than actual quanity');
+                        return;
+                       
+                        
+                      }
+                      if(Number(row.cells[4].children[0].value)>Number(row.cells[5].children[0].value))
+                      {
+                        
+                        alert('Order Min-Qty cannot be greater than Order Max-Qty');
+                        return;
+                       
+                        
+                      }
+                      if(Number(row.cells[4].children[0].value)<0)
+                      {
+                        
+                        alert('Order Min-Qty cannot be less than zero');
+                        return;
+                       
+                        
+                      }
+                 
+                                 }
+                           if(tckcontents=='')
+                           {
+                              getAll();
+                              ticketlogourl='';
+                           }
+                           else{
+                           saveTicketLogo(tckcontents);
+                           document.getElementById('ticketloader').style.display='';}
+                           Alert3.Cancel();
+                           setTicketDirtyFlag();
+                           return false;
+                        }                           
+                        
+   
+ </script>
+</apex:component>

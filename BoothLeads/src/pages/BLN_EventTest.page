@@ -1,0 +1,6 @@
+<apex:page showHeader="false"  sidebar="false" standardController="BLN_Event__c" extensions="BLN_EventsConTest">
+
+
+
+
+</apex:page>

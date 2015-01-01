@@ -1,0 +1,6 @@
+<apex:page standardController="User_Ext__c" extensions="userextcon">
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page: uext
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>
