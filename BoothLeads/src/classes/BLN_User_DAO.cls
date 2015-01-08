@@ -15,7 +15,6 @@ public without sharing class BLN_User_DAO{
         }
     
     }
-    
     // Return contacts
     public List<contact> conList(List<id> conids){
       return [select id,firstname,lastName,Email from contact where id in :conids];
@@ -172,5 +171,17 @@ public without sharing class BLN_User_DAO{
             return new GN_User__c();
         }
     }
+
+
+	 public  void updateStatus(user user, string userId,string pass){
+        user.IsSignUp__c =true;
+            if(pass!=null && pass!=''){
+              user.password__c = pass;
+            }
+        user.isSignup__c =true;    
+        user.isActive = true;
+        update user;
+     } 
+
 
 }

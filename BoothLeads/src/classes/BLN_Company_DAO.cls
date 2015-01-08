@@ -214,5 +214,16 @@ public without sharing class BLN_Company_DAO{
                  return '';
               }
           } 
+     public static string checkCompany(string cname,string uEmail){
+              LIST<UC_Role__c> UCRoleList = [SELECT id,Company__c,Company__r.id FROM UC_Role__c WHERE GN_User__r.Email__c =:uEmail and Company__r.Name=:cname and RoleId__r.Name='Company Name'];
+              system.debug('PPPPPPPPPPPPPp '+UCRoleList +'PPPPPPPPPPPP '+cname+'PPPPPPPPPPP '+uEmail );
+              if(UCRoleList.size()>0){
+                return UCRoleList[0].Company__r.id;
+              }else{
+                 return '';
+              }
+        
+            }
+ 
    
 }

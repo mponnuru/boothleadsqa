@@ -28,26 +28,23 @@ public without sharing class BLN_SignUpCon{
    
     public PageReference BLS_SignUpUser(){
          BLN_User_SignUP_BAL BLNuserSignupbal = new BLN_User_SignUP_BAL();
-         IF((ASCompanyName!=NULL && ASCompanyName !='')){
-            
-         }
          
-         successMSG = BLNuserSignupbal.CheckUserEmailExists( ASFirstName ,ASLastName , ASUserEmail , ASCompanyName, password  );
-       
-        Successbool = false;
-       
-       if( successMSG != null){
-            if(successMSG.toLowerCase()  == 'success'){
-                Successbool = true;
-                sendEmail();
-                forDisplayError =false;
-            }else{
-                Successbool = false;
-                forDisplayError =true;
-                error = successMSG ;
-            }
-       }     
-       return null;
+        // successMSG = BLNuserSignupbal.CheckUserEmailExists( ASFirstName ,ASLastName , ASUserEmail , ASCompanyName, password  );
+        
+        successMSG = BLN_UserService.signUp( ASFirstName ,ASLastName , ASUserEmail , ASCompanyName, password  );
+		   Successbool = false;
+		   if( successMSG != null){
+		        if(successMSG.toLowerCase()  == BLN_Constants.SUCCESS){
+		            Successbool = true;
+		            sendEmail();
+		            forDisplayError =false;
+		        }else{
+		            Successbool = false;
+		            forDisplayError =true;
+		            error = successMSG ;
+		        }
+		   }     
+		   return null;
     }
     
     
@@ -56,28 +53,28 @@ public without sharing class BLN_SignUpCon{
     public PageReference signUpLogin(){
          ASUserEmail = ASUserEmail.trim();
         password= password.trim();
-        return  Site.login(ASUserEmail , password, '/apex/BLN_UserEvents'); 
+        return  Site.login(ASUserEmail , password, BLN_UrlConstants.USER_EVENTS); 
     }
     
     public pageReference login(){
         forDisplayError = false;
         loginName = loginName.trim();
         loginPassword = loginPassword.trim();
-        pageReference pg =Site.login(loginName,loginPassword ,'/apex/BLN_UserEvents');
+        pageReference pg =Site.login(loginName,loginPassword ,BLN_UrlConstants.USER_EVENTS);
          if(pg !=null){
             return   pg;
         }
         else{
-            error='Your login attempt has failed. Make sure the username and password are correct.';
+            error=BLN_MsgConstants.LOGGIN_ERROR;
             forDisplayError = true;
             return null;
         }
     }
     
     public void sendEmail(){
-     OrgWideEmailAddress Org =  [select id from OrgWideEmailAddress WHERE address='support@boothleads.com'];
+     OrgWideEmailAddress Org =  [select id from OrgWideEmailAddress WHERE address=:BLN_Constants.ADMIN_MAIL];
         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-        email.setSubject('Welcome to eventdex- Your registration was successful');
+        email.setSubject(BLN_MsgConstants.WELCOME_MAIL_SUBJECT);
           
          List<Messaging.SingleEmailMessage> EmailsList = new List<Messaging.SingleEmailMessage>();
    
